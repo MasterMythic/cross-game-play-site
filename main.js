@@ -1,4 +1,4 @@
-/* Cross Game Labs — interactions. No dependencies. */
+/* Cross Game Play — interactions. No dependencies. */
 (() => {
   'use strict';
   const RM = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -130,7 +130,7 @@
     if (q.tag === 'head') { const hc = [0, .8, 0]; p2 = p2.map((x, k) => hc[k] + (x - hc[k]) * 1.45 + (k === 1 ? .04 : 0)); }
     else p2 = [p2[0] * 1.06, p2[1] * .94 - .04, p2[2] * 1.1];
     F[2].set(p2, i * 3);
-    // 3 identity mark: the CGL cross, two rounded bars
+    // 3 identity mark: the CGP cross, two rounded bars
     const bar = i % 2, ang = bar ? Math.PI / 4 : -Math.PI / 4;
     const len = 1.5, wd = .2, dp = .2;
     let lx, ly, lz; const face = rnd();

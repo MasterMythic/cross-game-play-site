@@ -1,6 +1,6 @@
-# Cross Game Labs — investor site
+# Cross Game Play — investor site
 
-Static, dependency-free investor website for Cross Game Labs: vision, the granted patent (US 12,420,199 B2), the filed portfolio, the market, and why IP is the last moat in an AI world.
+Static, dependency-free investor website for Cross Game Play: vision, the granted patent (US 12,420,199 B2), the filed portfolio, the market, and why IP is the last moat in an AI world.
 
 ## Run locally
 
