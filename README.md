@@ -22,4 +22,4 @@ Fonts load from Google Fonts. Everything else is self-contained.
 
 ## Status
 
-Draft for review. Not yet reviewed by patent counsel and not deployed. Patent status: published matters checked against Google Patents on 27 Oct 2026; filed-but-unpublished matters taken from USPTO filing receipts and internal portfolio records.
+Published at https://crossgameplay.com via GitHub Pages. Patent status: published matters checked against Google Patents on 27 Oct 2026; filed-but-unpublished matters taken from USPTO filing receipts and internal portfolio records.
