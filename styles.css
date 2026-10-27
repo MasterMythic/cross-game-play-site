@@ -409,10 +409,29 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opa
 
 /* ---------- access ---------- */
 .access{padding:clamp(110px,14vw,200px) 0;border-top:1px solid var(--line);position:relative;overflow:hidden;background:radial-gradient(60% 80% at 15% 100%,rgba(98,240,211,.1),transparent 70%)}
-.access-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:60px;align-items:end}
+.access-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:start}
 .access-title{font-size:clamp(48px,7.4vw,118px)}
 .access-side p{color:#C9C7C0;max-width:40ch}
 .access-side .btn{margin:10px 0 18px}
+
+/* ---------- contact form ---------- */
+.contact{display:grid;gap:14px;margin-top:22px}
+.field-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field .mono{font-size:10px;color:var(--muted)}
+.field input,.field select,.field textarea{width:100%;min-height:48px;padding:12px 14px;border-radius:12px;border:1px solid var(--line-2);background:rgba(11,12,14,.6);color:var(--paper);font:inherit;font-size:15px;transition:border-color .2s,background .2s}
+.field textarea{resize:vertical;min-height:110px;line-height:1.5}
+.field select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 20px) 21px,calc(100% - 15px) 21px;background-size:5px 5px;background-repeat:no-repeat}
+.field select option{background:var(--ink-2);color:var(--paper)}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--signal);background:rgba(98,240,211,.04)}
+.field input[aria-invalid="true"],.field textarea[aria-invalid="true"]{border-color:var(--deny)}
+.contact .btn{justify-self:start;margin-top:4px;cursor:pointer}
+.contact .btn[disabled]{opacity:.6;cursor:progress}
+.hp{position:absolute!important;left:-10000px;width:1px;height:1px;overflow:hidden}
+.form-status{min-height:1.4em;margin:0;text-transform:none;letter-spacing:.01em;font-size:13px;color:var(--muted)}
+.form-status.ok{color:var(--signal)}
+.form-status.err{color:var(--deny)}
+@media (max-width:560px){.field-row{grid-template-columns:minmax(0,1fr)}.contact .btn{width:100%;justify-content:center}}
 
 /* ---------- footer ---------- */
 .footer{border-top:1px solid var(--line);padding:60px 0 40px;color:var(--muted)}

@@ -6,6 +6,8 @@
 <title>Cross Game Play — The patented layer for cross-game identity</title>
 <meta name="description" content="Cross Game Play holds a granted U.S. patent (US 12,420,199 B2) on delivering a user's avatar and assets into multiple 3D platforms at runtime, plus a growing family of filed applications. Investor overview: cross-game identity, provenance and acceptance in the age of AI.">
 <meta name="theme-color" content="#0B0C0E">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://formsubmit.co; form-action 'self' https://formsubmit.co; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -425,8 +427,28 @@
     <h2 id="access-title" class="display access-title">Hold the gate<br><em>to every game world.</em></h2>
     <div class="access-side">
       <p>We're speaking with investors and strategic partners. Request the investor deck, the full portfolio schedule and claim-family map under NDA.</p>
-      <a class="btn btn-lg" href="mailto:KT@Crossgamelabs.com?subject=Cross%20Game%20Play%20%E2%80%94%20Investor%20materials%20request">Request investor access <span aria-hidden="true">→</span></a>
-      <p class="mono small">KT@Crossgamelabs.com</p>
+      <form class="contact" id="contact-form" novalidate>
+        <div class="field-row">
+          <label class="field"><span class="mono">Name *</span><input name="name" type="text" autocomplete="name" required maxlength="120"></label>
+          <label class="field"><span class="mono">Email *</span><input name="email" type="email" autocomplete="email" required maxlength="200"></label>
+        </div>
+        <div class="field-row">
+          <label class="field"><span class="mono">Organisation</span><input name="organisation" type="text" autocomplete="organization" maxlength="160"></label>
+          <label class="field"><span class="mono">I am</span>
+            <select name="role">
+              <option>An investor</option>
+              <option>A strategic partner</option>
+              <option>A potential licensee</option>
+              <option>Press</option>
+              <option>Other</option>
+            </select>
+          </label>
+        </div>
+        <label class="field"><span class="mono">Message *</span><textarea name="message" rows="4" required maxlength="4000" placeholder="What would you like to receive or discuss?"></textarea></label>
+        <label class="hp" aria-hidden="true">Leave this empty<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
+        <button class="btn btn-lg" type="submit">Request investor access <span aria-hidden="true">→</span></button>
+        <p class="form-status mono" role="status" aria-live="polite"></p>
+      </form>
     </div>
   </div>
 </section>

@@ -508,6 +508,52 @@
     rio.observe(recon);
   }
 
+
+  /* ================= CONTACT FORM ================= */
+  // FormSubmit alias (from the activation email). Keeps the recipient address out of the page source.
+  const FORM_ENDPOINT = '';
+  const form = document.getElementById('contact-form');
+  if (form) {
+    const status = $('.form-status', form);
+    const btn = $('button[type="submit"]', form);
+    const say = (msg, kind) => { status.textContent = msg; status.className = 'form-status mono' + (kind ? ' ' + kind : ''); };
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const f = form.elements;
+      let bad = null;
+      ['name', 'email', 'message'].forEach(n => {
+        const el = f[n]; const v = el.value.trim();
+        const ok = v && (n !== 'email' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+        el.setAttribute('aria-invalid', String(!ok));
+        if (!ok && !bad) bad = el;
+      });
+      if (bad) { say('Please fill in your name, a valid email and a message.', 'err'); bad.focus(); return; }
+      if (f._honey.value) { say('Thanks, your request has been sent.', 'ok'); form.reset(); return; }
+      if (!FORM_ENDPOINT) { say('The form is being switched on. Please try again shortly.', 'err'); return; }
+      btn.disabled = true; say('Sending…');
+      try {
+        const res = await fetch('https://formsubmit.co/ajax/' + FORM_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            name: f.name.value.trim(), email: f.email.value.trim(),
+            organisation: f.organisation.value.trim(), role: f.role.value,
+            message: f.message.value.trim(),
+            _subject: 'Cross Game Play investor enquiry: ' + f.name.value.trim(),
+            _replyto: f.email.value.trim(), _template: 'table', _captcha: 'false'
+          })
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && String(data.success) === 'true') {
+          form.reset(); say('Thanks. Your request has been sent and we’ll be in touch.', 'ok');
+        } else { throw new Error(data.message || 'send failed'); }
+      } catch (err) {
+        say('Sorry, that didn’t send. Please try again in a moment.', 'err');
+      } finally { btn.disabled = false; }
+    });
+    ['name', 'email', 'message'].forEach(n => form.elements[n].addEventListener('input', e => e.target.removeAttribute('aria-invalid')));
+  }
+
   /* ---------------- scroll: nav + progress ---------------- */
   const onScroll = () => {
     const y = window.scrollY;
