@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cross Game Labs — The patented layer for cross-game identity</title>
-<meta name="description" content="Cross Game Labs holds a granted U.S. patent (US 12,420,199 B2) on delivering a user's avatar and assets into multiple 3D platforms at runtime, plus a growing family of filed applications. Investor overview.">
+<meta name="description" content="Cross Game Labs holds a granted U.S. patent (US 12,420,199 B2) on delivering a user's avatar and assets into multiple 3D platforms at runtime, plus a growing family of filed applications. Investor overview: cross-game identity, provenance and acceptance in the age of AI.">
 <meta name="theme-color" content="#0B0C0E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,13 +30,14 @@
       <li><a href="#portfolio">Patents</a></li>
       <li><a href="#market">Market</a></li>
       <li><a href="#moat">Moat</a></li>
+      <li><a href="#ai">AI</a></li>
     </ul>
   </nav>
   <a class="btn btn-sm" href="#access">Investor access</a>
   <button class="menu" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu"><span></span><span></span></button>
 </header>
 <div class="mobile-menu" id="mobile-menu" hidden>
-  <a href="#vision">Vision</a><a href="#system">System</a><a href="#portfolio">Patents</a><a href="#market">Market</a><a href="#moat">Moat</a><a href="#access">Investor access</a>
+  <a href="#vision">Vision</a><a href="#system">System</a><a href="#portfolio">Patents</a><a href="#market">Market</a><a href="#moat">Moat</a><a href="#ai">AI</a><a href="#access">Investor access</a>
 </div>
 
 <main id="main">
@@ -52,7 +53,7 @@
         <span class="line"><span>Every engine.</span></span>
         <span class="line"><span><em>Patented.</em></span></span>
       </h1>
-      <p class="lede">Cross Game Labs holds a granted U.S. patent on delivering a player's avatar and owned assets into multiple 3D platforms at runtime. We filed in May 2023. Since then, Netflix and Epic Games have publicly committed to the cross-game future this portfolio was built for.</p>
+      <p class="lede">Cross Game Labs holds a granted U.S. patent on delivering a player's avatar and owned assets into multiple 3D platforms at runtime. We filed in May 2023. Since then, Netflix and Epic Games have publicly committed to the cross-game future this portfolio was built for, and AI is speeding it up.</p>
       <div class="cta-row">
         <a class="btn" href="#access">Request investor materials <span aria-hidden="true">→</span></a>
         <a class="btn btn-ghost" href="https://patents.google.com/patent/US12420199B2/en" target="_blank" rel="noopener">Read the patent <span aria-hidden="true">↗</span></a>
@@ -288,6 +289,7 @@
         <p class="fig mono">FIG. 06 — The thesis</p>
         <h2 id="moat-title" class="h2">In an AI world, IP is <em>the last moat.</em></h2>
         <p>AI has made writing code, generating art and shipping features cheap. Anything that can be built can now be rebuilt, faster and by anyone. What can't be rebuilt is a legal right.</p>
+        <p>A competitor with the best models in the world can rebuild our pipeline in a weekend. They can't give themselves a May 2023 priority date.</p>
         <p class="pull">AI can write the code. <em>It can't backdate a filing.</em></p>
       </div>
       <div class="erosion" aria-label="Moats that AI commoditises, and the one that remains">
@@ -319,10 +321,89 @@
   </div>
 </section>
 
+<!-- ============ AI ============ -->
+<section class="section ai" id="ai" aria-labelledby="ai-title">
+  <div class="wrap">
+    <p class="fig mono reveal">FIG. 07 — AI and the portfolio</p>
+    <div class="ai-head">
+      <h2 id="ai-title" class="h2 reveal">AI makes every asset portable. <em>Someone still decides what gets in.</em></h2>
+      <p class="ai-intro reveal">AI is about to make cross-game conversion trivial. A model can rebuild an outfit from a screenshot, fill a world with generated content, or drive a game engine's editor directly. That doesn't make the problem go away. It makes it bigger. The more content AI can move and remake, the more every destination needs to know where something came from, who owns it, and whether it's allowed in. That's the layer this portfolio covers.</p>
+    </div>
+
+    <!-- Interactive: AI reconstruction + receipt -->
+    <figure class="recon reveal" aria-labelledby="recon-cap">
+      <div class="recon-top">
+        <p class="mono recon-label">Illustrative · An AI-rebuilt asset arrives at a destination</p>
+        <div class="recon-toggle" role="radiogroup" aria-label="Choose the scenario">
+          <button type="button" role="radio" aria-checked="true" data-mode="receipt">Provenance attached</button>
+          <button type="button" role="radio" aria-checked="false" data-mode="laundered">Provenance stripped</button>
+        </div>
+      </div>
+      <div class="recon-stage">
+        <div class="recon-col">
+          <span class="mono step-n">01 · Source</span>
+          <div class="recon-art src" aria-hidden="true"><canvas width="220" height="220" data-art="src"></canvas></div>
+          <p>A licensed outfit, owned by a player in one title.</p>
+        </div>
+        <div class="recon-arrow" aria-hidden="true"><span class="mono">AI rebuild</span><i></i></div>
+        <div class="recon-col">
+          <span class="mono step-n">02 · Rebuilt</span>
+          <div class="recon-art out" aria-hidden="true"><canvas width="220" height="220" data-art="out"></canvas></div>
+          <p>A model regenerates it for a new engine. The file is new, so file-based protection sees nothing.</p>
+        </div>
+        <div class="recon-arrow" aria-hidden="true"><span class="mono">Arrives</span><i></i></div>
+        <div class="recon-col gate-col">
+          <span class="mono step-n">03 · Destination gate</span>
+          <dl class="receipt mono" aria-label="Provenance record">
+            <div><dt>Source evidence</dt><dd data-k="src">bound</dd></div>
+            <div><dt>AI pipeline</dt><dd data-k="pipe">identified</dd></div>
+            <div><dt>Output asset</dt><dd data-k="out">bound</dd></div>
+            <div><dt>Owner rights</dt><dd data-k="rights">verified</dd></div>
+          </dl>
+          <p class="verdict mono" aria-live="polite"><span>ACCEPT</span></p>
+        </div>
+      </div>
+      <figcaption id="recon-cap" class="recon-cap">This is the problem behind our filed application on <b>provenance for AI-reconstructed assets</b>. A rebuild shouldn't erase the chain of custody, and a regenerated copy shouldn't get in just because the file is new.</figcaption>
+    </figure>
+
+    <div class="ai-map">
+      <p class="mono ai-map-label reveal">Where AI changes the game, and the filed coverage that maps to it</p>
+      <ol class="ai-rows">
+        <li class="reveal">
+          <span class="mono ai-n">01</span>
+          <div class="ai-shift"><h3>AI rebuilds assets</h3><p>Copy protection fails once a model can recreate an item from a picture of it.</p></div>
+          <div class="ai-cover"><span class="mono">Filed · CIP of CGP01</span><b>Provenance for AI-reconstructed assets</b></div>
+        </li>
+        <li class="reveal">
+          <span class="mono ai-n">02</span>
+          <div class="ai-shift"><h3>AI generates worlds</h3><p>A generated world doesn't exist until runtime, so it can't pre-approve what players bring into it.</p></div>
+          <div class="ai-cover"><span class="mono">Filed · CIP of CGP01</span><b>Destination acceptance for generated worlds</b></div>
+        </li>
+        <li class="reveal">
+          <span class="mono ai-n">03</span>
+          <div class="ai-shift"><h3>AI characters need to persist</h3><p>Companions and characters with memory need their identity and behaviour to survive a move between titles.</p></div>
+          <div class="ai-cover"><span class="mono">Filed · Appl. 19/430,453</span><b>Persistent virtual persona across applications</b></div>
+        </li>
+        <li class="reveal">
+          <span class="mono ai-n">04</span>
+          <div class="ai-shift"><h3>AI output has to pay its sources</h3><p>When an owned asset shows up in rendered or generated content, its owner needs to be counted and paid.</p></div>
+          <div class="ai-cover"><span class="mono">Filed · Appl. 19/430,988</span><b>Exposure-based monetisation, including generative platforms</b></div>
+        </li>
+        <li class="reveal">
+          <span class="mono ai-n">05</span>
+          <div class="ai-shift"><h3>AI agents build the games</h3><p>Engines are opening their editors to AI models. Epic is exposing Unreal Engine 6 to Claude, Gemini and custom models through MCP. <a href="#s3" class="cite">[3]</a></p></div>
+          <div class="ai-cover pending"><span class="mono">In preparation</span><b>AI-agent and autonomous-avatar applications · Under NDA</b></div>
+        </li>
+      </ol>
+    </div>
+    <p class="note mono">Descriptions are simplified and are not claim language. Pending applications may not issue, and the scope of any issued claims may differ.</p>
+  </div>
+</section>
+
 <!-- ============ VALUE ============ -->
 <section class="section value" id="value" aria-labelledby="value-title">
   <div class="wrap">
-    <p class="fig mono reveal">FIG. 07 — How the portfolio creates value</p>
+    <p class="fig mono reveal">FIG. 08 — How the portfolio creates value</p>
     <h2 id="value-title" class="h2 reveal">Three ways the IP <em>turns into revenue.</em></h2>
     <ol class="lanes">
       <li class="reveal"><span class="n mono">A</span><div><h3>License</h3><p>Engines, platforms and publishers building cross-game avatars and items license the rights to do it.</p></div><span class="lane-tag mono">Primary</span></li>

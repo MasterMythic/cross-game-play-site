@@ -420,6 +420,94 @@
     }, { threshold: DESK.matches ? 0 : .35 }).observe(moat);
   }
 
+
+  /* ================= AI: reconstruction + provenance demo ================= */
+  const recon = $('.recon');
+  if (recon) {
+    const srcC = $('canvas[data-art="src"]', recon), outC = $('canvas[data-art="out"]', recon);
+    const sctx = srcC.getContext('2d'), octx = outC.getContext('2d');
+    const DIM = 220;
+    [srcC, outC].forEach(cv => { cv.width = DIM * 2; cv.height = DIM * 2; cv.getContext('2d').setTransform(2, 0, 0, 2, 0, 0); });
+    const jacket = new Path2D('M72 42 L96 30 Q110 48 124 30 L148 42 L192 74 L176 106 L156 92 L156 192 L64 192 L64 92 L44 106 L28 74 Z');
+    // source: crisp authored asset
+    const drawSrc = () => {
+      sctx.clearRect(0, 0, DIM, DIM);
+      sctx.save(); sctx.clip(jacket);
+      sctx.fillStyle = '#20242B'; sctx.fillRect(0, 0, DIM, DIM);
+      sctx.fillStyle = 'rgba(236,234,228,.08)';
+      for (let y = 0; y < DIM; y += 8) sctx.fillRect(0, y, DIM, 3);
+      sctx.fillStyle = '#62F0D3'; sctx.fillRect(28, 120, 164, 10);
+      sctx.fillStyle = '#E9B04B'; sctx.fillRect(122, 60, 16, 16);
+      sctx.restore();
+      sctx.strokeStyle = 'rgba(236,234,228,.75)'; sctx.lineWidth = 1.5; sctx.stroke(jacket);
+      sctx.beginPath(); sctx.moveTo(110, 48); sctx.lineTo(110, 192); sctx.stroke();
+    };
+    drawSrc();
+    // sample target points from the source pixels
+    const img = sctx.getImageData(0, 0, DIM * 2, DIM * 2).data;
+    const pts = [];
+    for (let y = 0; y < DIM; y += 4) for (let x = 0; x < DIM; x += 4) {
+      const k = ((y * 2) * DIM * 2 + x * 2) * 4;
+      if (img[k + 3] > 40) pts.push({ x, y, col: `rgb(${img[k]},${img[k + 1]},${img[k + 2]})`, sx: Math.random() * DIM, sy: Math.random() * DIM, d: Math.random() * .35 });
+    }
+    let t0 = 0, rRaf = 0;
+    const DUR = 1700;
+    const drawOut = (now) => {
+      rRaf = 0;
+      const p = RM.matches ? 1 : clamp((now - t0) / DUR);
+      octx.clearRect(0, 0, DIM, DIM);
+      for (const q of pts) {
+        const e = smooth(q.d, q.d + .65, p);
+        const x = q.sx + (q.x - q.sx) * e, y = q.sy + (q.y - q.sy) * e;
+        octx.fillStyle = e < 1 ? `rgba(98,240,211,${(.35 + e * .5).toFixed(2)})` : q.col;
+        const s = e < 1 ? 2 : 3.4;
+        octx.fillRect(x - s / 2, y - s / 2, s, s);
+      }
+      if (p >= 1) { octx.strokeStyle = 'rgba(236,234,228,.55)'; octx.lineWidth = 1.2; octx.stroke(jacket); }
+      if (p < 1) rRaf = requestAnimationFrame(drawOut);
+    };
+    const rebuild = () => { t0 = performance.now(); if (!rRaf) rRaf = requestAnimationFrame(drawOut); };
+
+    const STATES = {
+      receipt: { src: ['bound', 0], pipe: ['identified', 0], out: ['bound', 0], rights: ['verified', 0], verdict: 'ACCEPT' },
+      laundered: { src: ['missing', 1], pipe: ['unknown', 1], out: ['unbound', 1], rights: ['unverified', 1], verdict: 'QUARANTINE' }
+    };
+    const verdict = $('.verdict', recon), vSpan = $('span', verdict);
+    const btns = $$('.recon-toggle button', recon);
+    let timers = [];
+    const setMode = (mode, animate = true) => {
+      timers.forEach(clearTimeout); timers = [];
+      btns.forEach(b => { const on = b.dataset.mode === mode; b.setAttribute('aria-checked', String(on)); b.tabIndex = on ? 0 : -1; });
+      recon.classList.toggle('laundered', mode === 'laundered');
+      const s = STATES[mode];
+      const step = animate && !RM.matches ? 260 : 0;
+      ['src', 'pipe', 'out', 'rights'].forEach((k, i) => {
+        timers.push(setTimeout(() => {
+          const dd = $(`[data-k="${k}"]`, recon);
+          dd.textContent = s[k][0]; dd.classList.toggle('bad', !!s[k][1]);
+          dd.classList.remove('flip'); void dd.offsetWidth; dd.classList.add('flip');
+        }, 900 + i * step));
+      });
+      timers.push(setTimeout(() => {
+        vSpan.textContent = s.verdict;
+        verdict.classList.remove('pop'); void verdict.offsetWidth; verdict.classList.add('pop');
+      }, 900 + 4 * step + 150));
+      if (animate) rebuild();
+    };
+    btns.forEach(b => {
+      b.addEventListener('click', () => setMode(b.dataset.mode));
+      b.addEventListener('keydown', e => {
+        if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) return;
+        e.preventDefault();
+        const other = btns.find(x => x !== b); other.focus(); setMode(other.dataset.mode);
+      });
+    });
+    btns.forEach(b => { b.tabIndex = b.getAttribute('aria-checked') === 'true' ? 0 : -1; });
+    drawOut(performance.now() + DUR * 2);
+    const rio = new IntersectionObserver(([en]) => { if (en.isIntersecting) { rio.disconnect(); setMode('receipt'); } }, { threshold: .4 });
+    rio.observe(recon);
+  }
+
   /* ---------------- scroll: nav + progress ---------------- */
   const onScroll = () => {
     const y = window.scrollY;
