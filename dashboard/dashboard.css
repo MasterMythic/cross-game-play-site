@@ -1,0 +1,32 @@
+.docket-header{border-bottom:1px solid var(--line)}
+.docket-header-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:72px}
+.docket-header nav{display:flex;gap:20px;font-size:14px}
+.docket-header nav a{text-decoration:none;color:var(--muted)}
+.docket-header nav a:hover,.docket-header nav [aria-current]{color:var(--signal)}
+.docket-main{max-width:960px;padding-block:clamp(52px,9vw,108px) 72px}
+.docket-intro{margin-bottom:36px}
+.docket-intro .h2{max-width:none}
+.docket-intro p{margin:16px 0 0;color:var(--muted)}
+.docket-panel{padding:clamp(20px,4vw,36px);border:1px solid var(--line-2);border-radius:18px;background:var(--ink-2)}
+.docket-panel label{display:block;margin:18px 0 7px;font-size:14px;color:var(--muted)}
+.docket-controls,.docket-register-header{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.docket-register-header{justify-content:space-between}
+.docket-register-header .h3{margin:0}
+.docket-panel input{width:min(100%,340px);min-height:48px;padding:10px 14px;background:var(--ink);border:1px solid var(--line-2);border-radius:8px;color:var(--paper);font:inherit}
+.docket-panel button{cursor:pointer}
+.docket-panel button:disabled{opacity:.55;cursor:wait}
+.docket-owner{display:inline-block;margin-top:22px;color:var(--signal);font-size:14px;text-underline-offset:4px}
+.docket-error{margin:10px 0 0;color:#ff9f94;font-size:14px}
+.docket-count{color:var(--muted);margin:22px 0 8px}
+.docket-filings{margin:0;padding:0;list-style:none}
+.docket-filings li{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:18px;padding:17px 0;border-top:1px solid var(--line)}
+.docket-filings p{margin:0}
+.docket-filings .filing-name{color:var(--muted);font-size:12px}
+.docket-filings .filing-title{font-size:16px}
+.docket-filings a{color:var(--signal);text-decoration:none;letter-spacing:0}
+.docket-filings a:hover{text-decoration:underline}
+
+@media (max-width:520px){
+  .docket-header-inner{gap:12px;flex-wrap:wrap;padding-block:14px}
+  .docket-filings li{grid-template-columns:1fr;gap:4px}
+}

@@ -76,7 +76,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opa
 .menu span:first-child{top:17px}.menu span:last-child{top:25px}
 .menu[aria-expanded="true"] span:first-child{transform:translateY(4px) rotate(45deg)}
 .menu[aria-expanded="true"] span:last-child{transform:translateY(-4px) rotate(-45deg)}
-.mobile-menu{position:fixed;inset:0;z-index:45;background:var(--ink);padding:110px 28px 40px;display:flex;flex-direction:column;gap:6px}
+.mobile-menu{position:fixed;inset:0;z-index:45;background:var(--ink);padding:110px 28px 40px;display:flex;flex-direction:column;gap:6px;overflow-y:auto}
 .mobile-menu[hidden]{display:none}
 .mobile-menu a{font-size:36px;letter-spacing:-.03em;text-decoration:none;padding:8px 0;border-bottom:1px solid var(--line)}
 

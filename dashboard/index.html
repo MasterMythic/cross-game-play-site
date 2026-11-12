@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#0B0C0E">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src https://cross-game-patent-docket.buzmythic.chatgpt.site; form-action 'none'; base-uri 'none'; object-src 'none'">
+  <title>Patent Dashboard — Cross Game Play</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&amp;family=Geist+Mono:wght@400;500&amp;family=Instrument+Serif:ital@1&amp;display=swap">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/dashboard/dashboard.css">
+  <script src="/dashboard/dashboard.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="docket-header">
+    <div class="wrap docket-header-inner">
+      <a class="brand" href="/" aria-label="Cross Game Play home">
+        <svg class="mark" viewBox="0 0 40 40" aria-hidden="true">
+          <rect class="mark-a" x="16" y="-2" width="8" height="44" rx="4" transform="rotate(45 20 20)"/>
+          <rect class="mark-b" x="16" y="-2" width="8" height="44" rx="4" transform="rotate(-45 20 20)"/>
+        </svg>
+        <span>Cross Game Play</span>
+      </a>
+      <nav aria-label="Dashboard navigation"><a href="/">Investor site</a><a href="/dashboard/" aria-current="page">Dashboard</a></nav>
+    </div>
+  </header>
+
+  <main class="wrap docket-main" id="main">
+    <div class="docket-intro">
+      <h1 class="h2">Patent <em>dashboard</em></h1>
+      <p>Browse the published applications and granted patents in the Cross Game Play docket.</p>
+    </div>
+    <section class="docket-panel" id="guest-lock" aria-labelledby="unlock-heading">
+      <h2 id="unlock-heading" class="h3">Unlock the patent register</h2>
+      <form id="unlock-form" hidden>
+        <label for="password">Docket password</label>
+        <div class="docket-controls">
+          <input id="password" type="password" autocomplete="current-password" required maxlength="256">
+          <button class="btn" type="submit">Unlock dashboard <span aria-hidden="true">→</span></button>
+        </div>
+        <p class="docket-error" id="unlock-error" role="alert" hidden></p>
+      </form>
+      <noscript><p>Enable JavaScript to unlock the patent register.</p></noscript>
+      <a class="docket-owner" href="https://cross-game-patent-docket.buzmythic.chatgpt.site/">Owner workspace <span aria-hidden="true">↗</span></a>
+    </section>
+
+    <section class="docket-panel" id="guest-register" aria-labelledby="register-heading" hidden>
+      <div class="docket-register-header">
+        <h2 id="register-heading" class="h3" tabindex="-1">Published patent register</h2>
+        <button class="btn btn-ghost btn-sm" id="lock-register" type="button">Lock dashboard</button>
+      </div>
+      <label for="filing-search">Search filings</label>
+      <input id="filing-search" type="search" placeholder="Name, title or application number" autocomplete="off">
+      <p class="docket-count mono" id="filing-count" role="status"></p>
+      <ul class="docket-filings" id="filings"></ul>
+    </section>
+  </main>
+</body>
+</html>
