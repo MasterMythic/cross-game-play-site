@@ -1,6 +1,6 @@
 # Cross Game Play — investor site
 
-Static, dependency-free investor website for Cross Game Play: vision, the granted patent (US 12,420,199 B2), a company-reported second U.S. patent grant (CGP02, linked to application publication US 2024/0416248 A1), the filed portfolio, the market, and why IP is the last moat in an AI world.
+Static, dependency-free investor website for Cross Game Play: vision, the granted patent (US 12,420,199 B2), a company-reported Notice of Allowance for the rewards-system application (CGP02, linked to application publication US 2024/0416248 A1), the filed portfolio, the market, and why IP is the last moat in an AI world.
 
 ## Run locally
 

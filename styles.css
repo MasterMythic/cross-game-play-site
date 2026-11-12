@@ -210,7 +210,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opa
 
 /* ---------- portfolio ---------- */
 .portfolio-head{display:flex;justify-content:space-between;align-items:end;gap:40px;flex-wrap:wrap;margin-bottom:60px}
-.tally{display:grid;grid-template-columns:repeat(4,auto);gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.tally{display:grid;grid-template-columns:repeat(5,auto);gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden}
 .tally div{padding:14px 20px;border-left:1px solid var(--line);display:flex;flex-direction:column;gap:2px}
 .tally div:first-child{border-left:0}
 .tally b{font-family:var(--sans);font-size:34px;font-weight:450;letter-spacing:-.03em;text-transform:none;color:var(--paper)}
@@ -270,6 +270,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opa
 .ledger .num small{display:block;color:var(--dim);font-size:11px;margin-top:3px}
 .badge{justify-self:end;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:5px 9px;border-radius:4px;border:1px solid}
 .badge.granted{color:var(--seal);border-color:rgba(233,176,75,.5)}
+.badge.allowed{color:var(--seal);border-color:rgba(233,176,75,.5);border-style:dashed}
 .badge.pub{color:var(--signal);border-color:rgba(98,240,211,.45)}
 .badge.filed{color:var(--paper);border-color:var(--line-2)}
 .pipeline{margin-top:50px;padding:28px 30px;border:1px dashed var(--line-2);border-radius:16px;display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:baseline}
@@ -486,9 +487,9 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opa
   .lanes li{grid-template-columns:56px 1fr;gap:20px}
   .lane-tag{grid-column:2;justify-self:start}
   .pipeline{grid-template-columns:1fr}
-  .tally{grid-template-columns:repeat(2,1fr);width:100%}
-  .tally div:nth-child(3){border-left:0}
-  .tally div:nth-child(n+3){border-top:1px solid var(--line)}
+  .tally{grid-template-columns:repeat(3,1fr);width:100%}
+  .tally div:nth-child(4){border-left:0}
+  .tally div:nth-child(n+4){border-top:1px solid var(--line)}
 }
 @media (max-width:560px){
   :root{--wrap:calc(100vw - 36px)}
