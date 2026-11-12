@@ -6,57 +6,64 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="referrer" content="no-referrer">
   <meta name="theme-color" content="#0B0C0E">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src https://cross-game-patent-docket.buzmythic.chatgpt.site; form-action 'none'; base-uri 'none'; object-src 'none'">
+  <meta name="color-scheme" content="dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://cross-game-patent-docket.buzmythic.chatgpt.site; form-action 'none'; base-uri 'none'; object-src 'none'">
   <title>Patent Dashboard — Cross Game Play</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&amp;family=Geist+Mono:wght@400;500&amp;family=Instrument+Serif:ital@1&amp;display=swap">
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&amp;family=Geist+Mono:wght@400;500&amp;family=Instrument+Serif:ital@1&amp;display=swap">
   <link rel="stylesheet" href="/dashboard/dashboard.css">
+  <script src="/dashboard/website.js" defer></script>
   <script src="/dashboard/dashboard.js" defer></script>
 </head>
-<body>
-  <a class="skip" href="#main">Skip to content</a>
-  <header class="docket-header">
-    <div class="wrap docket-header-inner">
-      <a class="brand" href="/" aria-label="Cross Game Play home">
-        <svg class="mark" viewBox="0 0 40 40" aria-hidden="true">
-          <rect class="mark-a" x="16" y="-2" width="8" height="44" rx="4" transform="rotate(45 20 20)"/>
-          <rect class="mark-b" x="16" y="-2" width="8" height="44" rx="4" transform="rotate(-45 20 20)"/>
-        </svg>
-        <span>Cross Game Play</span>
-      </a>
-      <nav aria-label="Dashboard navigation"><a href="/">Investor site</a><a href="/dashboard/" aria-current="page">Dashboard</a></nav>
-    </div>
-  </header>
-
-  <main class="wrap docket-main" id="main">
-    <div class="docket-intro">
-      <h1 class="h2">Patent <em>dashboard</em></h1>
-      <p>Browse the published applications and granted patents in the Cross Game Play docket.</p>
-    </div>
-    <section class="docket-panel" id="guest-lock" aria-labelledby="unlock-heading">
-      <h2 id="unlock-heading" class="h3">Unlock the patent register</h2>
-      <form id="unlock-form" hidden>
-        <label for="password">Docket password</label>
-        <div class="docket-controls">
-          <input id="password" type="password" autocomplete="current-password" required maxlength="256">
-          <button class="btn" type="submit">Unlock dashboard <span aria-hidden="true">→</span></button>
-        </div>
-        <p class="docket-error" id="unlock-error" role="alert" hidden></p>
-      </form>
-      <noscript><p>Enable JavaScript to unlock the patent register.</p></noscript>
-      <a class="docket-owner" href="https://cross-game-patent-docket.buzmythic.chatgpt.site/">Owner workspace <span aria-hidden="true">↗</span></a>
+<body class="login-page">
+  <main class="login-layout" id="website-lock">
+    <section class="login-intro">
+      <div class="brand lock-brand"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><rect class="mark-a" x="16" y="-2" width="8" height="44" rx="4" transform="rotate(45 20 20)"/><rect class="mark-b" x="16" y="-2" width="8" height="44" rx="4" transform="rotate(-45 20 20)"/></svg></span><span>Cross Game<span class="brand-caption">PATENT DOCKET</span></span></div>
+      <div class="login-copy"><span class="eyebrow">CROSS GAME PLAY</span><h1>Patent<br><em>portfolio</em></h1><p>Applications, prosecution deadlines and invention ideas in one workspace.</p></div>
+      <div class="technical-pattern" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <div class="login-footer"><a class="website-back" href="/">← CrossGamePlay.com</a></div>
     </section>
-
-    <section class="docket-panel" id="guest-register" aria-labelledby="register-heading" hidden>
-      <div class="docket-register-header">
-        <h2 id="register-heading" class="h3" tabindex="-1">Published patent register</h2>
-        <button class="btn btn-ghost btn-sm" id="lock-register" type="button">Lock dashboard</button>
-      </div>
-      <label for="filing-search">Search filings</label>
-      <input id="filing-search" type="search" placeholder="Name, title or application number" autocomplete="off">
-      <p class="docket-count mono" id="filing-count" role="status"></p>
-      <ul class="docket-filings" id="filings"></ul>
+    <section class="login-panel">
+      <div class="unlock-form"><form id="unlock-form" hidden>
+        <span class="lock-symbol" aria-hidden="true"><i></i></span>
+        <h2>Unlock the docket</h2>
+        <p>Enter the docket password to browse published filings, or sign in as owner to manage the portfolio.</p>
+        <label for="password">Docket password</label>
+        <div class="password-field"><input id="password" type="password" autocomplete="current-password" required maxlength="256"><button id="show-password" class="password-toggle" type="button" aria-pressed="false">Show</button></div>
+        <p id="login-error" class="error-message" role="alert" hidden></p>
+        <button class="button primary unlock-button" type="submit">Unlock workspace <span aria-hidden="true">→</span></button>
+      </form><noscript><p>Enable JavaScript to open the docket.</p></noscript>
+        <button class="button secondary website-owner" type="button" data-action="owner-connect">Owner sign-in</button></div>
     </section>
   </main>
+  <div class="app-shell" id="website-dashboard" hidden>
+    <aside class="sidebar">
+      <a class="brand" href="#overview" aria-label="Cross Game Patent Docket overview"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><rect class="mark-a" x="16" y="-2" width="8" height="44" rx="4" transform="rotate(45 20 20)"/><rect class="mark-b" x="16" y="-2" width="8" height="44" rx="4" transform="rotate(-45 20 20)"/></svg></span><span>Cross Game<span class="brand-caption">PATENT DOCKET</span></span></a>
+      <div class="nav-content">
+        <span class="nav-label">WORKSPACE</span>
+        <nav aria-label="Workspace navigation">
+          <a data-tab="overview" href="#overview"><span class="nav-icon" aria-hidden="true">◫</span><span>Overview</span></a>
+          <a data-tab="register" href="#register"><span class="nav-icon" aria-hidden="true">▤</span><span>Patent register</span></a>
+          <a data-tab="deadlines" href="#deadlines"><span class="nav-icon" aria-hidden="true">◷</span><span>Deadlines</span></a>
+          <a data-tab="ideas" href="#ideas"><span class="nav-icon" aria-hidden="true">◇</span><span>Idea lab</span></a>
+        </nav>
+      </div>
+      <div class="sidebar-footer"><a class="website-back" href="/">← CrossGamePlay.com</a>
+        <span class="private-status"><span class="status-light"></span>Private workspace</span>
+        <button class="lock-button" data-action="logout" type="button" aria-label="Lock docket"><span class="nav-icon" aria-hidden="true">⇥</span><span>Lock docket</span></button>
+      </div>
+    </aside>
+    <main class="workspace" id="main">
+      <header class="topbar"><div class="breadcrumb"><span>Workspace</span><span class="breadcrumb-slash">/</span><strong id="section-name">Overview</strong></div><div class="topbar-actions"><button class="button secondary find-button" data-action="search" type="button"><span aria-hidden="true">⌕</span> Find a record <kbd>/</kbd></button><button id="top-create" class="button primary" data-action="new-filing" type="button"><span aria-hidden="true">＋</span> Add filing</button></div></header>
+      <div id="content" class="content"><div class="loading-panel" role="status">Loading your docket…</div></div>
+    </main>
+  </div>
+  <dialog class="editor" id="record-editor" aria-labelledby="editor-title">
+    <form id="record-form" method="post" novalidate>
+      <header class="editor-header"><div><p class="eyebrow" id="editor-kind"></p><h2 id="editor-title"></h2><p id="editor-meta" class="editor-meta" hidden></p></div><button class="icon-button" data-action="close" type="button" aria-label="Close editor">×</button></header>
+      <div id="editor-body" class="editor-body"></div>
+      <footer class="editor-footer"><p id="editor-error" class="error-message" role="alert" hidden></p><div class="editor-actions"><button class="button secondary" data-action="close" type="button">Cancel</button><button id="save-record" class="button primary" type="submit">Save record</button></div></footer>
+    </form>
+  </dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
 </body>
 </html>
