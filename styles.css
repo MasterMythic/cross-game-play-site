@@ -216,6 +216,10 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opa
 .tally b{font-family:var(--sans);font-size:34px;font-weight:450;letter-spacing:-.03em;text-transform:none;color:var(--paper)}
 .tally div:first-child b{color:var(--seal)}
 .tally span{color:var(--dim);font-size:10px}
+.grant-note{color:var(--paper);opacity:.72;font-size:11px;line-height:1.6;letter-spacing:.02em;text-transform:none;max-width:64ch;margin:-44px 0 48px}
+.announce{margin-top:18px;max-width:46ch;font-size:15px;line-height:1.55;color:var(--paper)}
+.announce .mono{color:var(--seal);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-right:8px}
+.announce a{color:var(--seal);text-underline-offset:3px}
 .spotlight{display:grid;grid-template-columns:auto 1fr;gap:clamp(30px,5vw,70px);align-items:center;padding:clamp(28px,4vw,56px);border:1px solid rgba(233,176,75,.3);border-radius:22px;background:
   radial-gradient(80% 120% at 0% 0%,rgba(233,176,75,.08),transparent 60%),var(--ink-2);margin-bottom:60px}
 .seal{position:relative;width:clamp(150px,18vw,220px);aspect-ratio:1}

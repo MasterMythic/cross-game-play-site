@@ -348,7 +348,7 @@
     { s: 'pub', m: 'CIP', t: 'Adaptive transformation of assets across target contexts', d: 'Target-context descriptors drive how an asset is adapted for each destination', n: 'US 2025/0371786 A1', w: 'Filed 21 Aug 2025 · Pub. 4 Dec 2025', u: 'US20250371786A1' },
     { s: 'pub', m: 'CIP', t: 'Marketplace with adaptive compatibility verification', d: 'Verified vs unverified catalogues, escrow and entitlement records for delivered assets', n: 'US 2025/0378496 A1', w: 'Filed 22 Aug 2025 · Pub. 11 Dec 2025', u: 'US20250378496A1' },
     { s: 'pub', m: 'CIP', t: 'Functional-parameter mapping for gameplay consistency', d: 'Keeps an item’s gameplay behaviour consistent when it moves to a new engine', n: 'US 2025/0387714 A1', w: 'Filed 22 Aug 2025 · Pub. 25 Dec 2025', u: 'US20250387714A1' },
-    { s: 'pub', m: 'CGP02', t: 'Rewards for in-game achievements across third-party platforms', d: 'Achievements earned in one title unlock rewards in others', n: 'US 2024/0416248 A1', w: 'Filed 13 Jun 2023 · Pub. 19 Dec 2024', u: 'US20240416248A1' },
+    { s: 'granted', q: 1, m: 'CGP02', t: 'Rewards for in-game achievements across third-party platforms', d: 'Achievements earned in one title unlock rewards in others', n: 'US 2024/0416248 A1 (application publication)', w: 'Filed 13 Jun 2023 · Pub. 19 Dec 2024 · Grant reported by Cross Game Play', href: 'https://patents.google.com/patent/US20240416248A1/en?inventor=Kelvin+Troy' },
     { s: 'pub', m: 'CIP-D', t: 'Cross-engine synchronisation of game state data', d: 'Telemetry-driven, policy-governed interoperability between engines', n: 'US 2026/0131238 A1', w: 'Filed 6 Jan 2026 · Pub. 14 May 2026', u: 'US20260131238A1' },
     { s: 'filed', m: 'CGP03', t: 'Persistent virtual persona across heterogeneous applications', d: 'Identity, memory and behaviour that carry across titles', n: 'Appl. 19/430,453', w: 'Filed 23 Dec 2025 · Pub. expected 2027' },
     { s: 'filed', m: 'CGP04', t: 'Exposure-based monetisation of digital assets', d: 'Asset owners are paid when their items are seen across applications', n: 'Appl. 19/430,988', w: 'Filed 23 Dec 2025 · Pub. expected 2027' },
@@ -365,7 +365,7 @@
     LEDGER.filter(r => f === 'all' || r.s === f).forEach((r, i) => {
       const li = document.createElement('li');
       li.className = 'enter';
-      li.innerHTML = `<span class="m">${r.m}</span><span class="t"><b>${r.t}</b><span>${r.d}</span></span><span class="num">${r.u ? `<a href="https://patents.google.com/patent/${r.u}/en" target="_blank" rel="noopener">${r.n} ↗</a>` : r.n}<small>${r.w}</small></span><span class="badge ${r.s}">${LABEL[r.s]}</span>`;
+      li.innerHTML = `<span class="m">${r.m}</span><span class="t"><b>${r.t}</b><span>${r.d}</span></span><span class="num">${r.u || r.href ? `<a href="${r.href || `https://patents.google.com/patent/${r.u}/en`}" target="_blank" rel="noopener">${r.n} ↗</a>` : r.n}<small>${r.w}</small></span><span class="badge ${r.s}">${LABEL[r.s]}${r.q ? '*' : ''}</span>`;
       ledger.appendChild(li);
       setTimeout(() => li.classList.remove('enter'), RM.matches ? 0 : 40 + i * 40);
     });
