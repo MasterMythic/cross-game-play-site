@@ -11,8 +11,8 @@
   <title>Patent Dashboard — Cross Game Play</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&amp;family=Geist+Mono:wght@400;500&amp;family=Instrument+Serif:ital@1&amp;display=swap">
   <link rel="stylesheet" href="/dashboard/dashboard.css">
-  <script src="/dashboard/website.js" defer></script>
-  <script src="/dashboard/dashboard.js" defer></script>
+  <script src="/dashboard/website.js?v=f1ed85b84492" defer></script>
+  <script src="/dashboard/dashboard.js?v=7c46fb916a6a" defer></script>
 </head>
 <body class="login-page">
   <main class="login-layout" id="website-lock">
@@ -26,13 +26,12 @@
       <div class="unlock-form"><form id="unlock-form" hidden>
         <span class="lock-symbol" aria-hidden="true"><i></i></span>
         <h2>Unlock the docket</h2>
-        <p>Enter the docket password to browse published filings, or sign in as owner to manage the portfolio.</p>
+        <p>Enter the docket password to access filings, deadlines, and invention ideas.</p>
         <label for="password">Docket password</label>
         <div class="password-field"><input id="password" type="password" autocomplete="current-password" required maxlength="256"><button id="show-password" class="password-toggle" type="button" aria-pressed="false">Show</button></div>
         <p id="login-error" class="error-message" role="alert" hidden></p>
         <button class="button primary unlock-button" type="submit">Unlock workspace <span aria-hidden="true">→</span></button>
-      </form><noscript><p>Enable JavaScript to open the docket.</p></noscript>
-        <button class="button secondary website-owner" type="button" data-action="owner-connect">Owner sign-in</button></div>
+      </form><noscript><p>Enable JavaScript to open the docket.</p></noscript></div>
     </section>
   </main>
   <div class="app-shell" id="website-dashboard" hidden>

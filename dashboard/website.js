@@ -1,10 +1,18 @@
 (() => {
   const backend = 'https://cross-game-patent-docket.buzmythic.chatgpt.site';
-  const verifierKey = 'cgp.docket.verifier';
   const tokenKey = 'cgp.docket.owner';
-  const dashboardPath = '/dashboard/';
-  const hex = bytes => Array.from(new Uint8Array(bytes), byte => byte.toString(16).padStart(2, '0')).join('');
-  let ownerToken;
+  const sessionPath = '/api/website/session';
+  let sessionToken;
+
+  function saveSession(token) {
+    sessionToken = token;
+    try {
+      if (token) sessionStorage.setItem(tokenKey, token);
+      else sessionStorage.removeItem(tokenKey);
+    } catch {
+      // The current page can stay unlocked when browser storage is disabled.
+    }
+  }
 
   async function request(path, method, data, token) {
     const headers = {};
@@ -13,6 +21,7 @@
     let response;
     try {
       response = await fetch(backend + path, { method, headers, credentials: 'omit', redirect: 'error',
+        signal: AbortSignal.timeout(15000),
         ...(data ? { body: JSON.stringify(data) } : {}) });
     } catch {
       throw new Error('Could not reach the docket. Try again in a moment.');
@@ -23,11 +32,11 @@
     return result;
   }
 
-  function open(records) {
+  function open() {
     document.querySelector('#website-lock').hidden = true;
     document.querySelector('#website-dashboard').hidden = false;
     document.body.classList.remove('login-page');
-    startDashboard(records);
+    startDashboard();
   }
 
   function showError(error) {
@@ -36,51 +45,36 @@
     alert.hidden = false;
   }
 
-  function returnToLock(fragment = '') {
-    history.replaceState(null, '', dashboardPath + fragment);
+  function returnToLock() {
     location.reload();
   }
 
   window.docketWebsite = {
-    async connect() {
-      try {
-        const verifier = hex(crypto.getRandomValues(new Uint8Array(32)));
-        const challenge = hex(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier)));
-        sessionStorage.setItem(verifierKey, verifier);
-        const url = new URL('/connect-dashboard', backend);
-        url.search = new URLSearchParams({ site: location.origin, challenge });
-        location.assign(url);
-      } catch {
-        if (document.querySelector('#website-lock').hidden) {
-          returnToLock('#owner-unavailable');
-        } else showError(new Error('Enable browser session storage to sign in as owner.'));
-      }
-    },
     async lock() {
-      const token = ownerToken;
+      const token = sessionToken;
+      saveSession();
+      const editor = document.querySelector('#record-editor');
+      if (editor.open) editor.close();
+      document.querySelector('#website-dashboard').hidden = true;
       try {
-        if (token) {
-          sessionStorage.removeItem(tokenKey);
-          await request('/api/website/session', 'DELETE', undefined, token);
-        }
+        if (token) await request(sessionPath, 'DELETE', undefined, token);
       } finally {
-        ownerToken = undefined;
         returnToLock();
       }
     },
     async api(path, method, data) {
-      try { return await request('/api/website/' + path.slice('/api/'.length), method, data, ownerToken); }
+      try { return await request('/api/website/' + path.slice('/api/'.length), method, data, sessionToken); }
       catch (error) {
         if (error.status === 401) {
-          sessionStorage.removeItem(tokenKey);
-          returnToLock('#owner-expired');
+          saveSession();
+          returnToLock();
         }
         throw error;
       }
     },
   };
 
-  document.addEventListener('DOMContentLoaded', async () => {
+  document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('#unlock-form');
     const password = document.querySelector('#password');
     const toggle = document.querySelector('#show-password');
@@ -97,32 +91,22 @@
       unlock.disabled = true;
       document.querySelector('#login-error').hidden = true;
       try {
-        const { filings } = await request('/api/guest/filings', 'POST', { password: password.value });
+        const { token } = await request('/api/website/login', 'POST', { password: password.value });
+        saveSession(token);
         password.value = '';
-        open(filings.map(record => ({ ...record, id: record.publication, kind: 'filing',
-          status: /B[12]$/.test(record.publication) ? 'Granted' : 'Published' })));
+        open();
       } catch (error) {
         showError(error);
         password.select();
       } finally { unlock.disabled = false; }
     });
 
-    const fragment = location.hash.slice(1);
-    if (fragment.startsWith('owner-')) history.replaceState(null, '', dashboardPath);
     try {
-      if (fragment.startsWith('owner-code=')) {
-        const verifier = sessionStorage.getItem(verifierKey);
-        sessionStorage.removeItem(verifierKey);
-        const { token } = await request('/api/website/session', 'POST', { code: fragment.slice('owner-code='.length), verifier });
-        sessionStorage.setItem(tokenKey, token);
-      }
-      ownerToken = sessionStorage.getItem(tokenKey);
-      if (ownerToken) open();
-      else if (fragment === 'owner-denied') showError(new Error('Sign in with the ChatGPT account that owns the docket.'));
-      else if (fragment === 'owner-expired') showError(new Error('Your owner session expired. Sign in again.'));
-      else if (fragment === 'owner-unavailable') showError(new Error('Enable browser session storage to sign in as owner.'));
-    } catch (error) {
-      if (fragment.startsWith('owner-')) showError(error);
-    } finally { form.hidden = false; }
+      sessionToken = sessionStorage.getItem(tokenKey);
+    } catch {
+      // Browser storage is optional for password access.
+    }
+    if (sessionToken) open();
+    form.hidden = false;
   });
 })();

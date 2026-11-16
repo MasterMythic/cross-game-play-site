@@ -319,7 +319,6 @@ input::placeholder, textarea::placeholder { color: var(--muted); }
 .editor-body .pill { justify-self: start; }
 .toast { background: var(--raised); border-color: var(--line-strong); }
 .error-message { color: var(--red); }
-.website-owner { margin-top: 14px; }
 .website-back { color: var(--muted); text-decoration: none; font-size: .8rem; }
 .website-back:hover { color: var(--blue); }
 .sidebar .website-back { display: block; padding: 8px 12px; }

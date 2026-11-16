@@ -23,7 +23,6 @@ let editing;
 let saving = false;
 let toastTimeout;
 let returnFocus;
-let readOnly = false;
 let started = false;
 let filters = { search: '', status: '', type: '' };
 
@@ -85,17 +84,14 @@ function overview() {
     b.filingDate.localeCompare(a.filingDate)).slice(0, 5);
   const pattern = '<div class="technical-pattern" aria-hidden="true"><i></i><i></i><i></i><i></i></div>';
   const hero = '<section class="hero"><div><p class="eyebrow">CROSS GAME PLAY</p><h1>Patent ' +
-    (website ? '<em>portfolio</em>' : 'portfolio') + '</h1><p>' +
-    (readOnly ? 'Browse the published applications and granted patents.' : 'Track filings, prosecution deadlines and new inventions.') + '</p></div>' + pattern + '</section>';
+    (website ? '<em>portfolio</em>' : 'portfolio') + '</h1><p>Track filings, prosecution deadlines and new inventions.</p></div>' + pattern + '</section>';
   const stats = '<section class="stats" aria-label="Portfolio totals">' +
-    stat('▤', readOnly ? 'Published filings' : 'Verified filings', items.filter(r => r.status !== 'Unverified').length, 'Applications and issued patents') +
-    stat('✓', 'Granted', items.filter(r => r.status === 'Granted').length, readOnly ? 'Issued patents' : allowed + ' allowed, awaiting issue') +
-    (readOnly ? '' :
+    stat('▤', 'Verified filings', items.filter(r => r.status !== 'Unverified').length, 'Applications and issued patents') +
+    stat('✓', 'Granted', items.filter(r => r.status === 'Granted').length, allowed + ' allowed, awaiting issue') +
     stat('◇', 'Invention ideas', ideas().length, 'Foundational ideas and follow-ons') +
-    stat('◷', 'Upcoming deadlines', soon.length, late.length ? late.length + ' past due' : 'Next 90 days')) + '</section>';
+    stat('◷', 'Upcoming deadlines', soon.length, late.length ? late.length + ' past due' : 'Next 90 days') + '</section>';
   const recent = panel('Portfolio highlights', '', linkButton('View register', 'register'), highlights.map(r =>
     rowButton(r, r.name, r.title, status(r.status))).join(''), 'Add a filing to start your register.');
-  if (readOnly) return hero + stats + recent;
   const verification = items.filter(r => r.status === 'Unverified');
   const unverified = panel('Needs verification', '', linkButton('See matters', 'register?unverified'), verification.slice(0, 3).map(r =>
     rowButton(r, r.name, r.title, '')).join(''), 'Every tracked filing has a verified status.');
@@ -111,9 +107,9 @@ function options(values, current, placeholder = '') {
   return entries.map(([value, label]) => '<option value="' + esc(value) + '"' + (value === current ? ' selected' : '') + '>' + esc(label) + '</option>').join('');
 }
 function register() {
-  return pageHeading('Patent register', readOnly ? 'Search published applications and grants.' : 'Search and edit applications, continuations, CIPs and provisionals.') +
+  return pageHeading('Patent register', 'Search and edit applications, continuations, CIPs and provisionals.') +
     '<section class="panel"><div class="filters"><div class="filter-search"><label for="filter-search" class="sr-only">Search the register</label><input type="search" id="filter-search" placeholder="Search by title, docket or serial number" value="' + esc(filters.search) + '"></div>' +
-    '<label class="sr-only" for="filter-status">Status</label><select id="filter-status">' + options(readOnly ? ['Published', 'Granted'] : filingStatuses, filters.status, 'All statuses') + '</select>' +
+    '<label class="sr-only" for="filter-status">Status</label><select id="filter-status">' + options(filingStatuses, filters.status, 'All statuses') + '</select>' +
     '<label class="sr-only" for="filter-type">Filing type</label><select id="filter-type">' + options(filingTypes, filters.type, 'All filing types') + '</select>' +
     '<button class="button secondary" data-action="reset" type="button">Clear</button></div>' +
     '<div class="table-scroll" role="region" tabindex="0" aria-label="Patent register results"><table><thead><tr><th scope="col">Matter</th><th scope="col">Application / publication</th><th scope="col">Type</th><th scope="col">Filed</th><th scope="col">Status</th></tr></thead><tbody id="filing-rows"></tbody></table></div><p class="table-caption" id="result-count" aria-live="polite"></p></section>';
@@ -177,11 +173,6 @@ function render() {
     content.innerHTML = '<section class="panel"><p class="empty" role="alert">' + esc(loadError) + ' <button class="text-button" data-action="retry" type="button">Retry</button></p></section>';
     return;
   }
-  if (readOnly && (tab === 'deadlines' || tab === 'ideas')) {
-    content.innerHTML = pageHeading(sections[tab], 'Open the owner workspace to use this section.') +
-      '<section class="panel"><p class="empty"><button class="button primary" type="button" data-action="owner-connect">Owner sign-in</button></p></section>';
-    return;
-  }
   const page = { overview, register, deadlines: deadlinesPage, ideas: ideaPage };
   content.innerHTML = page[tab]();
   if (tab === 'register') renderRegisterRows();
@@ -234,14 +225,6 @@ function openEditor(record) {
   const meta = node('#editor-meta');
   meta.textContent = record.serial ? 'Application ' + record.serial : '';
   meta.hidden = !meta.textContent;
-  if (readOnly) {
-    node('#editor-body').innerHTML = '<div class="field full"><strong>' + esc(record.title) + '</strong><p>' +
-      esc(record.type) + ' · ' + formatDate(record.filingDate) + '</p>' + status(record.status) +
-      '<a class="text-button" href="https://patents.google.com/patent/' + encodeURIComponent(record.publication) + '/en" target="_blank" rel="noopener noreferrer">' +
-      esc(record.publication) + ' ↗</a></div>';
-    editor.showModal();
-    return;
-  }
   node('#save-record').textContent = isFiling ? 'Save filing' : 'Save idea';
   const c = (key, label, options) => control(record, key, label, options);
   let fields = c('title', isFiling ? 'Short title' : 'Working title', { required: true, full: true });
@@ -322,10 +305,6 @@ document.addEventListener('change', event => {
 document.addEventListener('click', async event => {
   const trigger = event.target.closest('button');
   if (!trigger) return;
-  if (trigger.dataset.action === 'owner-connect') {
-    await website.connect();
-    return;
-  }
   if (!started) return;
   if (trigger.dataset.edit) {
     const record = records.find(r => r.id === trigger.dataset.edit);
@@ -333,10 +312,10 @@ document.addEventListener('click', async event => {
     return;
   }
   switch (trigger.dataset.action) {
-    case 'new-filing': if (!readOnly) newFiling(); break;
-    case 'new-idea': if (!readOnly) newIdea(); break;
-    case 'new-foundational': if (!readOnly) newIdea('Foundational patent'); break;
-    case 'new-cip': if (!readOnly) newIdea('CIP candidate'); break;
+    case 'new-filing': newFiling(); break;
+    case 'new-idea': newIdea(); break;
+    case 'new-foundational': newIdea('Foundational patent'); break;
+    case 'new-cip': newIdea('CIP candidate'); break;
     case 'search': findRecord(); break;
     case 'close': if (!saving) editor.close(); break;
     case 'retry': await refresh(); break;
@@ -359,7 +338,7 @@ editor.addEventListener('cancel', event => { if (saving) event.preventDefault();
 editor.addEventListener('close', () => { if (returnFocus?.isConnected) returnFocus.focus(); });
 form.addEventListener('submit', async event => {
   event.preventDefault();
-  if (readOnly || saving || !form.reportValidity()) return;
+  if (saving || !form.reportValidity()) return;
   const draft = Object.fromEntries(new FormData(form));
   const submit = node('#save-record');
   const message = node('#editor-error');
@@ -383,20 +362,11 @@ form.addEventListener('submit', async event => {
     submit.disabled = false;
   }
 });
-function startDashboard(guestRecords) {
+function startDashboard() {
   started = true;
-  readOnly = Boolean(guestRecords);
-  if (readOnly) {
-    records = guestRecords;
-    loading = false;
-    node('#top-create').hidden = true;
-    node('#save-record').hidden = true;
-    editor.querySelector('.editor-actions [data-action=close]').textContent = 'Close';
-    node('.private-status').lastChild.textContent = 'Guest access';
-  }
   useLocationFilters();
   render();
-  if (!readOnly) refresh();
+  refresh();
 }
 
 if (!website) startDashboard();
